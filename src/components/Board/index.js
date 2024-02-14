@@ -3,7 +3,6 @@ import { actionItemClick } from "@/slice/menuSlice";
 
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { socket } from "@/socket";
 const Board = () => {
     const dispatch = useDispatch();
     const canvasRef = useRef(null)
@@ -24,7 +23,6 @@ const Board = () => {
             anchor.href = URL
             anchor.download = 'sketch.jpg'
             anchor.click()
-            console.log(URL)
         }
         else if (actionMenuItem === MENU_ITEMS.UNDO || actionMenuItem === MENU_ITEMS.REDO) {
             if (historyPointer.current > 0 && actionMenuItem === MENU_ITEMS.UNDO) historyPointer.current -= 1
@@ -69,8 +67,6 @@ const Board = () => {
         const handleMouseDown = (e) => {
             shouldDraw.current = true
             beginPath(e.clientX, e.clientY)
-            context.moveTo(e.clientX, e.clientY)
-
         }
         const handleMouseMove = (e) => {
             if (!shouldDraw.current) return
@@ -83,14 +79,13 @@ const Board = () => {
             historyPointer.current = drawHistory.current.length - 1
         }
 
+        const handleBeginPath = (path)=>{
+            beginPath(path.x, path.y)
+        }
+
         canvas.addEventListener('mousedown', handleMouseDown)
         canvas.addEventListener('mousemove', handleMouseMove)
         canvas.addEventListener('mouseup', handleMouseUp)
-
-
-        socket.on("connect",()=>{
-            console.log("client connected");
-        });
 
         return () => {
             canvas.removeEventListener('mousedown', handleMouseDown)
