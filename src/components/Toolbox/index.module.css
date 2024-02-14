@@ -1,0 +1,19 @@
+.toolboxContainer{
+    @apply p-5 absolute top-1/4 left-5 w-64 rounded-md;
+    border: 1px solid rgb(179, 165, 165);
+}
+.toolItem{
+    @apply mb-5
+}
+.toolText{
+    font-size: 11px;
+}
+.itemContainer{
+    @apply flex justify-between mt-2;
+}
+.colorBox{
+    @apply h-5 w-5 mr-1 rounded-sm cursor-pointer;
+}
+.active{
+    border: 2px solid rgb(146, 136, 136);
+}
